@@ -1,0 +1,89 @@
+
+<div class="container">
+
+<div class="add-customer-box">
+
+
+    <form #customerForm="ngForm" (ngSubmit)="addCustomer()">
+        <label>
+          Name:
+          <input type="text" [(ngModel)]="newCustomer.name" name="name" required maxlength="20">  
+        </label>
+      
+        <label>
+          Last Name:
+          <input type="text" [(ngModel)]="newCustomer.lastName" name="lastName" required  maxlength="30">
+        </label>
+      
+        <label>
+          VAT Identification Number:
+          <input type="text" [(ngModel)]="newCustomer.vatIdentificationNumber" name="vatIdentificationNumber" required pattern="[A-Z]{2}[0-9]+" maxlength="12"
+          title="Please enter the VAT Identification Number in the format XX9999999999, where XX are two letters and 9999999999 are up to ten digits.">
+        </label>
+      
+        <label>
+          Address:
+          <input type="text" [(ngModel)]="newCustomer.address" name="address" required  maxlength="50">
+        </label>
+      
+        <button type="submit" class="btn btn-success" [disabled]="!customerForm.form.valid">Add</button>
+      
+
+
+</form>
+
+</div>
+
+<div class="customer-list" > 
+    <button type="button" class="btn btn-success btn-show" (click)="hideListFunc()">Show customers</button>
+    <ul *ngIf="hideList">
+        <li class="li-list" *ngFor="let customer of customersList.slice(0)" [appCustomerdate]="customer.created" >
+            Name: {{customer.name}}<br>
+            Last Name: {{customer.lastName}}<br>
+            VAT Identification Number: {{customer.vatIdentificationNumber}}<br>
+            Address: {{customer.address}}
+            <button type="button" class="btn btn-warning" (click)="editCustomer(customer)">Edit</button>
+            <button type="button" class="btn btn-danger" (click)="removeCustomer(customer)">Delete</button>
+    </li>
+    </ul>
+
+    <div class="edit-customer-list" *ngIf="selectedCustomer"> 
+      <h2>Edit customer</h2>
+      <form #customerEditForm="ngForm" (ngSubmit)="saveEditedCustomer()">
+        <label>
+          Name:
+          <input type="text" [(ngModel)]="selectedCustomer.name" name="name" required maxlength="20">  
+        </label>
+    
+        <label>
+          Last Name:
+          <input type="text" [(ngModel)]="selectedCustomer.lastName" name="lastName" required maxlength="30">
+        </label>
+    
+        <label>
+          VAT Identification Number:
+          <input type="text" [(ngModel)]="selectedCustomer.vatIdentificationNumber" name="vatIdentificationNumber" required
+          pattern="[A-Z]{2}[0-9]+" maxlength="12"
+          title="Please enter the VAT Identification Number in the format XX9999999999, where XX are two letters and 9999999999 are up to ten digits.">
+        </label>
+    
+        <label>
+          Address:
+          <input type="text" [(ngModel)]="selectedCustomer.address" name="address" required >
+        </label>
+    
+        <button type="submit" class="btn btn-primary" [disabled]="!customerEditForm.form.valid">Save</button>
+
+
+      </form>
+
+
+
+
+    </div>
+
+</div>
+</div>
+
+
+
